@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+
+<widget-definition id="org.myextension.widgets.mysearch"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:noNamespaceSchemaLocation="http://www.hybris.com/schema/cockpitng/widget-definition.xsd">
+	<name>My Search</name>
+	<description>HyHub Search Widget</description>
+	<defaultTitle>Search</defaultTitle>
+	<author>Jason Kim</author>
+	<version>1.0</version>
+	<controller class="org.myextension.widgets.mysearch.MySearchController" />
+</widget-definition>

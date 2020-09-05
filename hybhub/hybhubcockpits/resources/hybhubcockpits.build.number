@@ -1,0 +1,9 @@
+#Ant properties
+#Thu Nov 28 11:29:49 CET 2019
+builddate=20191128 1126
+description=hybhubcockpits
+name=hybhubcockpits
+releasedate=20170803 1323
+vendor=hybris
+version=6.5.0.27
+version.api=6.5.0
