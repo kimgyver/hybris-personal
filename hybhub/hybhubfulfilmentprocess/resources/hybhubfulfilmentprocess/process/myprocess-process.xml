@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<process xmlns="http://www.hybris.de/xsd/processdefinition"
+  start="firstStep" name="myProcess"
+  processClass="com.hybhub.fulfilmentprocess.model.MyProcessModel">
+  
+  <action id="firstStep" bean="firstStepAction">
+  	<transition name="OK" to="secondStep" />
+  	<transition name="NOK" to="abortStep" />
+  </action>
+  
+  <action id="secondStep" bean="secondStepAction">
+  	<transition name="OK" to="success" />
+  	<transition name="NOK" to="abortStep" />
+  </action>
+  
+  <action id="abortStep" bean="abortStepAction">
+  	<transition name="OK" to="failed" />
+  	<transition name="NOK" to="error" />
+  </action>
+  
+  <end id="error" state="ERROR">All went wrong.</end>
+  <end id="failed" state="FAILED">Process failed.</end>
+  <end id="success" state="SUCCEEDED">Process succeeded.</end>
+</process>
+
+<!-- Below groovy code can be tested in Administration cockpit console -->
+<!-- import de.hybris.platform.servicelayer.model.ModelService; -->
+<!-- import de.hybris.platform.processengine.BusinessProcessService; -->
+<!-- import com.hybhub.fulfilmentprocess.model.MyProcessModel; -->
+
+<!-- ModelService modelService=spring.getBean("modelService"); -->
+<!-- BusinessProcessService bpService=spring.getBean("businessProcessService"); -->
+<!-- MyProcessModel myProcess=bpService.createProcess("myProcess"+ -->
+<!--                                                  System.currentTimeMillis(), "myProcess"); -->
+
+<!-- myProcess.setFail(false); -->
+<!-- myProcess.setError(true); -->
+
+<!-- modelService.save(myProcess); -->
+<!-- bpService.startProcess(myProcess); -->
+
+<!-- modelService.refresh(myProcess); -->
+<!-- println myProcess.state; -->

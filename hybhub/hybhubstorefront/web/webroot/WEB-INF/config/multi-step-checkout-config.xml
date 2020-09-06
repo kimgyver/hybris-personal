@@ -29,6 +29,21 @@
 	<alias name="abstractCheckoutStep" alias="checkoutStep"/>
 	<bean id="abstractCheckoutStep" class="de.hybris.platform.acceleratorstorefrontcommons.checkout.steps.CheckoutStep" abstract="true" />
 
+	<alias name="defaultHybhubStep" alias="hybhubStep" />
+	<bean id="defaultHybhubStep" parent="checkoutStep">
+		<property name="checkoutGroup" ref="hybhubCheckoutGroup"/>
+		<property name="checkoutStepValidator" ref="defaultHybhubCheckoutValidator"/>
+		<property name="transitions">
+			<map>
+				<entry key="previous" value-ref="REDIRECT_MULTI_STEP_CHECKOUT"/>
+				<entry key="current" value-ref="REDIRECT_TO_HYBHUB"/>
+				<entry key="next" value-ref="REDIRECT_TO_DELIVERY_ADDRESS"/>
+			</map>
+		</property>
+		<property name="progressBarId" value="hybhubStep"/>
+	</bean>
+
+
 	<alias name="defaultMultiStepCheckout" alias="multiStepCheckout" />
 	<bean id="defaultMultiStepCheckout" parent="checkoutStep">
 		<property name="checkoutGroup" ref="defaultCheckoutGroup"/>
@@ -114,6 +129,20 @@
 	</bean>
 
 	<!-- Responsive Checkout Steps START -->
+
+	<alias name="defaultHybhubCheckout" alias="hybhubCheckout" />
+	<bean id="defaultHybhubCheckout" parent="checkoutStep">
+		<property name="checkoutGroup" ref="hybhubCheckoutGroup"/>
+		<property name="checkoutStepValidator" ref="defaultHybhubCheckoutValidator"/>
+		<property name="transitions">
+			<map>
+				<entry key="previous" value-ref="REDIRECT_TO_CART"/>
+				<entry key="current" value-ref="REDIRECT_MULTI_STEP_CHECKOUT"/>
+				<entry key="next" value-ref="REDIRECT_TO_DELIVERY_ADDRESS"/>
+			</map>
+		</property>
+		<property name="progressBarId" value="multi"/>
+	</bean>
 	
 	<alias name="defaultResponsiveMultiStepCheckout" alias="responsiveMultiStepCheckout" />
 	<bean id="defaultResponsiveMultiStepCheckout" parent="checkoutStep">
@@ -298,6 +327,45 @@
 
 	<!---Default Responsive checkout group END-->
 
+
+
+	<alias name="defaultHybhubCheckoutGroup" alias="hybhubCheckoutGroup" />
+	<bean id="defaultHybhubCheckoutGroup"  class="de.hybris.platform.acceleratorstorefrontcommons.checkout.steps.CheckoutGroup">
+		<property name="groupId"  value="hybhubCheckoutGroup"/>
+		<property name="checkoutStepMap">
+			<map merge="true">
+				<entry key="multi" value-ref="responsiveMultiStepCheckout"/>
+				<entry key="hybhub" value-ref="hybhubCheckout"/>
+				<entry key="delivery-address" value-ref="responsiveDeliveryAddressCheckoutStep"/>
+				<entry key="delivery-method" value-ref="responsiveDeliveryMethodCheckoutStep"/>
+				<entry key="payment-method" value-ref="responsivePaymentMethodCheckoutStep"/>
+				<entry key="summary" value-ref="responsiveSummaryCheckoutStep"/>
+			</map>
+		</property>
+		<property name="validationResultsMap">
+			<map merge="true">
+				<entry key="FAILED" value-ref="REDIRECT_TO_CART"/>
+				<entry key="REDIRECT_TO_DELIVERY_ADDRESS" value-ref="REDIRECT_TO_DELIVERY_ADDRESS"/>
+				<entry key="REDIRECT_TO_CART" value-ref="REDIRECT_TO_CART"/>
+				<entry key="REDIRECT_TO_PAYMENT_METHOD" value-ref="REDIRECT_TO_PAYMENT_METHOD"/>
+				<entry key="REDIRECT_TO_DELIVERY_METHOD" value-ref="REDIRECT_TO_DELIVERY_METHOD"/>
+				<entry key="REDIRECT_TO_SUMMARY" value-ref="REDIRECT_TO_SUMMARY"/>
+			</map>
+		</property>
+		<property name="checkoutProgressBar">
+			<map merge="true">
+				<entry key="1" value-ref="hybhubStep"/>
+				<entry key="2" value-ref="responsiveDeliveryAddressCheckoutStep"/>
+				<entry key="3" value-ref="responsiveDeliveryMethodCheckoutStep"/>
+				<entry key="4" value-ref="responsivePaymentMethodCheckoutStep"/>
+				<entry key="5" value-ref="responsiveSummaryCheckoutStep"/>
+			</map>
+		</property>
+	</bean>
+
+
+
+
 	<!--Validation-->
 
 	<bean id="abstractCheckoutStepValidator" class="de.hybris.platform.acceleratorstorefrontcommons.checkout.steps.validation.AbstractCheckoutStepValidator" abstract="true">
@@ -312,6 +380,8 @@
 	<bean id="defaultPickupCheckoutValidator" class="com.hybhub.storefront.checkout.steps.validation.impl.DefaultPickupCheckoutStepValidator" parent="abstractCheckoutStepValidator" />
 	<bean id="defaultSummaryCheckoutValidator" class="com.hybhub.storefront.checkout.steps.validation.impl.DefaultSummaryCheckoutStepValidator" parent="abstractCheckoutStepValidator" />
 
+	<bean id="defaultHybhubCheckoutValidator" class="com.hybhub.storefront.checkout.steps.validation.impl.DefaultHybhubValidator" parent="abstractCheckoutStepValidator" />
+
 	<bean id="defaultResponsiveMultiStepCheckoutValidator" class="com.hybhub.storefront.checkout.steps.validation.impl.ResponsiveMultiStepCheckoutStepValidator" parent="abstractCheckoutStepValidator" />
 	<bean id="defaultResponsiveDeliveryAddressCheckoutValidator" class="com.hybhub.storefront.checkout.steps.validation.impl.ResponsiveDeliveryAddressCheckoutStepValidator" parent="abstractCheckoutStepValidator" />
 	<bean id="defaultResponsiveDeliveryMethodCheckoutValidator" class="com.hybhub.storefront.checkout.steps.validation.impl.ResponsiveDeliveryMethodCheckoutStepValidator" parent="abstractCheckoutStepValidator" />
@@ -322,6 +392,7 @@
 
 	<!--Checkout GroupMap-->
 	<util:map id="checkoutFlowGroupMap" >
+		<entry key="hybhubCheckoutGroup"  value-ref="hybhubCheckoutGroup"/>
 		<entry key="apparelCheckoutGroup"  value-ref="apparelCheckoutGroup"/>
 		<entry key="defaultCheckoutGroup" value-ref="defaultCheckoutGroup"/>
 		<entry key="responsiveCheckoutGroup" value-ref="responsiveCheckoutGroup"/>
@@ -330,6 +401,10 @@
 
 
 	<!-- Redirects -->
+
+	<bean id="REDIRECT_TO_HYBHUB" class="java.lang.String">
+		<constructor-arg value="redirect:/checkout/multi/hybhub"/>
+	</bean>
 
 	<bean id="REDIRECT_TO_CART" class="java.lang.String">
 		<constructor-arg value="redirect:/cart"/>

@@ -37,5 +37,17 @@
 					
 			</attributes>
 			</itemtype>
-	</itemtypes>
+			
+		<itemtype code="MyProcess" autocreate="true" generate="true" extends="BusinessProcess">
+			<attributes>
+				<attribute qualifier="fail" type="boolean">
+					<persistence type="property" />
+				</attribute>			
+				<attribute qualifier="error" type="boolean">
+					<persistence type="property" />
+				</attribute>			
+			</attributes>
+		</itemtype>
+			
+	</itemtypes>	
 </items>

@@ -122,4 +122,18 @@
 		<property name="sessionService" ref="sessionService"/>
 	</bean>
 
+
+	<bean id="myProcessDefinitionResource" class="de.hybris.platform.processengine.definition.ProcessDefinitionResource" >
+		<property name="resource" value="classpath:/hybhubfulfilmentprocess/process/myprocess-process.xml"/>
+	</bean>
+
+	<bean id="firstStepAction" class="com.hybhub.fulfilmentprocess.action.myprocess.FirstStepAction" parent="abstractAction" >
+	</bean>
+
+	<bean id="secondStepAction" class="com.hybhub.fulfilmentprocess.action.myprocess.SecondStepAction" parent="abstractAction" >
+	</bean>
+	
+	<bean id="abortStepAction" class="com.hybhub.fulfilmentprocess.action.myprocess.AbortStepAction" parent="abstractAction" >
+	</bean>
+
 </beans>

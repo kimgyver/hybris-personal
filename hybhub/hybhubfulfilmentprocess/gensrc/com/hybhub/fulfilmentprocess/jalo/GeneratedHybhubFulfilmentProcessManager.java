@@ -1,17 +1,22 @@
 /*
  * ----------------------------------------------------------------
  * --- WARNING: THIS FILE IS GENERATED AND WILL BE OVERWRITTEN! ---
- * --- Generated at 5/09/2020 12:39:23 PM                       ---
+ * --- Generated at 7/09/2020 12:43:31 AM                       ---
  * ----------------------------------------------------------------
  */
 package com.hybhub.fulfilmentprocess.jalo;
 
 import com.hybhub.fulfilmentprocess.constants.HybhubFulfilmentProcessConstants;
+import com.hybhub.fulfilmentprocess.jalo.MyProcess;
 import de.hybris.platform.jalo.Item;
 import de.hybris.platform.jalo.Item.AttributeMode;
+import de.hybris.platform.jalo.JaloBusinessException;
+import de.hybris.platform.jalo.JaloSystemException;
 import de.hybris.platform.jalo.SessionContext;
 import de.hybris.platform.jalo.enumeration.EnumerationValue;
 import de.hybris.platform.jalo.extension.Extension;
+import de.hybris.platform.jalo.type.ComposedType;
+import de.hybris.platform.jalo.type.JaloGenericCreationException;
 import de.hybris.platform.ordersplitting.jalo.ConsignmentProcess;
 import de.hybris.platform.processengine.jalo.BusinessProcess;
 import java.util.Collections;
@@ -45,6 +50,32 @@ public abstract class GeneratedHybhubFulfilmentProcessManager extends Extension
 			ret.putAll(attr);
 		}
 		return ret;
+	}
+	
+	public MyProcess createMyProcess(final SessionContext ctx, final Map attributeValues)
+	{
+		try
+		{
+			ComposedType type = getTenant().getJaloConnection().getTypeManager().getComposedType( HybhubFulfilmentProcessConstants.TC.MYPROCESS );
+			return (MyProcess)type.newInstance( ctx, attributeValues );
+		}
+		catch( JaloGenericCreationException e)
+		{
+			final Throwable cause = e.getCause();
+			throw (cause instanceof RuntimeException ?
+			(RuntimeException)cause
+			:
+			new JaloSystemException( cause, cause.getMessage(), e.getErrorCode() ) );
+		}
+		catch( JaloBusinessException e )
+		{
+			throw new JaloSystemException( e ,"error creating MyProcess : "+e.getMessage(), 0 );
+		}
+	}
+	
+	public MyProcess createMyProcess(final Map attributeValues)
+	{
+		return createMyProcess( getSession().getSessionContext(), attributeValues );
 	}
 	
 	/**
