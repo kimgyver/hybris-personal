@@ -511,6 +511,15 @@
 		<property name="eventService" ref="eventService" />
 		<property name="timeService" ref="timeService" />
 	</bean>
+	
+	<bean id="hybhubProductRemoveInterceptor" class="com.hybhub.core.interceptors.HybhubProductRemoveInterceptor" />
+	
+	<bean id="hybhubProductRemoveInterceptorMapping"
+		class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping">
+		<property name="interceptor" ref="hybhubProductRemoveInterceptor"/>
+		<property name="typeCode" value="Product"/>
+	</bean>
+		
 
 	<import resource="/hybhubcore/processes/quote/quote-buyer-process-spring.xml"/>
 	<import resource="/hybhubcore/processes/quote/quote-salesrep-process-spring.xml"/>
