@@ -199,6 +199,8 @@
 		Event listeners are singletons, therefore the dependency for a bean in tenant-scope
 		must be configured with a lookup method.
 	-->
+	<bean class="com.hybhub.core.event.HybhubListener" parent="abstractEventListener"/>
+	
 	<bean id="orderCancelledEventListener"
 	      class="com.hybhub.core.event.OrderCancelledEventListener" parent="abstractAcceleratorSiteEventListener">
 		<property name="modelService" ref="modelService"/>
